@@ -46,7 +46,7 @@ function amountFor(perf, play) {
         break;
       
       default:
-          throw new Error(`알 수 없는 장르 ${pley.type}`);
+          throw new Error(`알 수 없는 장르 ${play.type}`);
     }
     return result;
 }
