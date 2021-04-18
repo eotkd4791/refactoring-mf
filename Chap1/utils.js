@@ -9,4 +9,4 @@ async function fetchData(filePath) {
   }
 }
 
-export { fetchData }
+export { fetchData };
