@@ -118,8 +118,8 @@ function acquireData(input) {
   const lines = input.split('\n');
   return lines
         .slice  (1)
-        .filter (line => line.trim() !== '')
-        .map    (line => line.split(','))
+        .filter (line  => line.trim() !== '')
+        .map    (line  => line.split(','))
         .filter (field => field[1].trim() === 'India')
         .map    (field => ({city: field[0].trim(), phone: field[2].trim()}));
         ;
