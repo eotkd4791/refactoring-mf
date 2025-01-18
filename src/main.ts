@@ -37,13 +37,13 @@ function statement(invoice: Invoice, plays: Plays) {
     volumeCredits += Math.max(perf.audience - 30, 0);
     if ("comedy" === play.type) volumeCredits += Math.floor(perf.audience / 5);
 
-    result += `  ${play.name}: ${format(thisAmount / 100)} (${
+    result += `${play.name}: ${format(thisAmount / 100)} (${
       perf.audience
-    } seats)\n`;
+    }석)\n`;
     totalAmount += thisAmount;
   }
 
-  result += `Amount owed is ${format(totalAmount / 100)}\n`;
-  result += `You earned ${volumeCredits} credits\n`;
+  result += `총액 ${format(totalAmount / 100)}\n`;
+  result += `적립 포인트: ${volumeCredits} 점\n`;
   return result;
 }
