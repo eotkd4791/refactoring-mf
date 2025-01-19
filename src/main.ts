@@ -4,9 +4,9 @@ import { statement } from "@/chap1/statement";
 import { render } from "@/utils/render";
 
 function main() {
-	const invoice = invoices[0];
-	const result = statement(invoice, plays);
-	render(result);
+  const invoice = invoices[0];
+  const result = statement(invoice, plays);
+  render(result);
 }
 
 main();

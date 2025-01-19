@@ -1,10 +1,10 @@
 export type Plays = {
-	[key: string]: Play;
+  [key: string]: Play;
 };
 
 export type Play = {
-	name: string;
-	type: PlayType;
+  name: string;
+  type: PlayType;
 };
 
 export type PlayType = "comedy" | "tragedy";
