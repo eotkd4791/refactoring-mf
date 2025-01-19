@@ -1,7 +1,7 @@
 import { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/types/Invoice";
 import { Play, Plays } from "@/types/play";
 
-class PerformanceCalculator {
+abstract class PerformanceCalculator {
 	constructor(private readonly _performance: Performance, private readonly _play: Play) {}
 
 	get performance() {
@@ -12,19 +12,7 @@ class PerformanceCalculator {
 		return this._play;
 	}
 
-	get amount() {
-		let result = 0;
-
-		switch (this.play.type) {
-			case "tragedy":
-				throw new Error("서브 클래스에서 처리하도록 설계되었습니다.");
-			case "comedy":
-				throw new Error("서브 클래스에서 처리하도록 설계되었습니다.");
-			default:
-				throw new Error(`알 수 없는 장르: ${this.play.type}`);
-		}
-		return result;
-	}
+	abstract get amount(): number;
 
 	get volumeCredits() {
 		let result = 0;
