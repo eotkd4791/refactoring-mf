@@ -9,14 +9,6 @@ export function createStatementData(invoice: Invoice, plays: Plays) {
 	result.totalVolumeCredits = totalVolumeCredits(result);
 	return result;
 
-	function totalAmount(data: EnrichedInvoice) {
-		return data.performances.reduce((total, p) => total + p.amount, 0);
-	}
-
-	function totalVolumeCredits(data: EnrichedInvoice) {
-		return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
-	}
-
 	function enrichPerformance(aPerformance: Performance) {
 		const result = { ...aPerformance } as EnrichedPerformance;
 		result.play = playFor(result);
@@ -59,5 +51,13 @@ export function createStatementData(invoice: Invoice, plays: Plays) {
 			result += Math.floor(aPerformance.audience / 5);
 		}
 		return result;
+	}
+
+	function totalAmount(data: EnrichedInvoice) {
+		return data.performances.reduce((total, p) => total + p.amount, 0);
+	}
+
+	function totalVolumeCredits(data: EnrichedInvoice) {
+		return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
 	}
 }
