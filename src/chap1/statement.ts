@@ -2,6 +2,9 @@ import type { Performance, Invoice } from "@/types/Invoice";
 import type { Plays } from "@/types/play";
 
 export function statement(invoice: Invoice, plays: Plays) {
+	return renderPlainText(invoice, plays);
+}
+function renderPlainText(invoice: Invoice, plays: Plays) {
 	let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
 	for (let perf of invoice.performances) {
