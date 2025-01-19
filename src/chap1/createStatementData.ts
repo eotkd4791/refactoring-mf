@@ -2,12 +2,12 @@ import { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/ty
 import { Plays } from "@/types/play";
 
 export function createStatementData(invoice: Invoice, plays: Plays) {
-	const statementData = {} as EnrichedInvoice;
-	statementData.customer = invoice.customer;
-	statementData.performances = invoice.performances.map(enrichPerformance);
-	statementData.totalAmount = totalAmount(statementData);
-	statementData.totalVolumeCredits = totalVolumeCredits(statementData);
-	return statementData;
+	const result = {} as EnrichedInvoice;
+	result.customer = invoice.customer;
+	result.performances = invoice.performances.map(enrichPerformance);
+	result.totalAmount = totalAmount(result);
+	result.totalVolumeCredits = totalVolumeCredits(result);
+	return result;
 
 	function totalAmount(data: EnrichedInvoice) {
 		return data.performances.reduce((total, p) => total + p.amount, 0);
