@@ -1,10 +1,6 @@
 import { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/types/Invoice";
 import { Play, Plays } from "@/types/play";
 
-function createPerformanceCalculator(aPerformance: Performance, aPlay: Play) {
-	return new PerformanceCalculator(aPerformance, aPlay);
-}
-
 class PerformanceCalculator {
 	constructor(private readonly _performance: Performance, private readonly _play: Play) {}
 
@@ -21,18 +17,9 @@ class PerformanceCalculator {
 
 		switch (this.play.type) {
 			case "tragedy":
-				result = 40000;
-				if (this.performance.audience > 30) {
-					result += 1000 * (this.performance.audience - 30);
-				}
-				break;
+				throw new Error("서브 클래스에서 처리하도록 설계되었습니다.");
 			case "comedy":
-				result = 30000;
-				if (this.performance.audience > 20) {
-					result += 10000 + 500 * (this.performance.audience - 20);
-				}
-				result += 300 * this.performance.audience;
-				break;
+				throw new Error("서브 클래스에서 처리하도록 설계되었습니다.");
 			default:
 				throw new Error(`알 수 없는 장르: ${this.play.type}`);
 		}
@@ -45,6 +32,36 @@ class PerformanceCalculator {
 		if ("comedy" === this.play.type) {
 			result += Math.floor(this.performance.audience / 5);
 		}
+		return result;
+	}
+}
+
+function createPerformanceCalculator(aPerformance: Performance, aPlay: Play) {
+	switch (aPlay.type) {
+		case "tragedy":
+			return new TragedyCalculator(aPerformance, aPlay);
+		case "comedy":
+			return new ComedyCalculator(aPerformance, aPlay);
+	}
+}
+
+class TragedyCalculator extends PerformanceCalculator {
+	get amount() {
+		let result = 40_000;
+		if (this.performance.audience > 30) {
+			result += 1_000 * (this.performance.audience - 30);
+		}
+		return result;
+	}
+}
+
+class ComedyCalculator extends PerformanceCalculator {
+	get amount() {
+		let result = 30_000;
+		if (this.performance.audience > 20) {
+			result += 10_000 + 500 * (this.performance.audience - 20);
+		}
+		result += 300 * this.performance.audience;
 		return result;
 	}
 }
