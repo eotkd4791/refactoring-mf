@@ -5,10 +5,10 @@ export function statement(invoice: Invoice, plays: Plays) {
 	const statementData = {} as Invoice;
 	statementData.customer = invoice.customer;
 	statementData.performances = invoice.performances;
-	return renderPlainText(statementData, invoice, plays);
+	return renderPlainText(statementData, plays);
 }
 
-function renderPlainText(data: Invoice, invoice: Invoice, plays: Plays) {
+function renderPlainText(data: Invoice, plays: Plays) {
 	let result = `청구 내역 (고객명: ${data.customer})\n`;
 
 	for (let perf of data.performances) {
