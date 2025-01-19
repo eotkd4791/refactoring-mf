@@ -9,11 +9,11 @@ export function statement(invoice: Invoice, plays: Plays) {
 	for (let perf of invoice.performances) {
 		volumeCredits += volumeCreditsFor(perf);
 
-		result += `${playFor(perf).name}: ${format(amountFor(perf) / 100)} (${perf.audience}석)\n`;
+		result += `${playFor(perf).name}: ${usd(amountFor(perf) / 100)} (${perf.audience}석)\n`;
 		totalAmount += amountFor(perf);
 	}
 
-	result += `총액 ${format(totalAmount / 100)}\n`;
+	result += `총액 ${usd(totalAmount / 100)}\n`;
 	result += `적립 포인트: ${volumeCredits} 점\n`;
 	return result;
 
@@ -26,7 +26,7 @@ export function statement(invoice: Invoice, plays: Plays) {
 		return result;
 	}
 
-	function format(aNumber: number) {
+	function usd(aNumber: number) {
 		return new Intl.NumberFormat("en-US", {
 			style: "currency",
 			currency: "USD",
