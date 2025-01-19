@@ -24,11 +24,11 @@ export function createStatementData(invoice: Invoice, plays: Plays) {
     return plays[aPerformance.playID];
   }
 
-  function totalAmount(data: EnrichedInvoice) {
-    return data.performances.reduce((total, p) => total + p.amount, 0);
+  function totalAmount({ performances }: EnrichedInvoice) {
+    return performances.reduce((total, p) => total + p.amount, 0);
   }
 
-  function totalVolumeCredits(data: EnrichedInvoice) {
-    return data.performances.reduce((total, p) => total + p.volumeCredits, 0);
+  function totalVolumeCredits({ performances }: EnrichedInvoice) {
+    return performances.reduce((total, p) => total + p.volumeCredits, 0);
   }
 }
