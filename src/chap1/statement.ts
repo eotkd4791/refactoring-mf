@@ -4,8 +4,12 @@ import type { Plays } from "@/types/play";
 export function statement(invoice: Invoice, plays: Plays) {
 	const statementData = {} as Invoice;
 	statementData.customer = invoice.customer;
-	statementData.performances = invoice.performances;
+	statementData.performances = invoice.performances.map(enrichPerformance);
 	return renderPlainText(statementData, plays);
+
+	function enrichPerformance(aPerformance: Performance) {
+		return { ...aPerformance };
+	}
 }
 
 function renderPlainText(data: Invoice, plays: Plays) {
