@@ -3,13 +3,34 @@ import { Overwrite } from "@/types/libs";
 import type { Play, Plays } from "@/types/play";
 
 type EnrichedPerformance = Overwrite<Performance, { play: Play; amount: number; volumeCredits: number }>;
-type EnrichedInvoice = Overwrite<Invoice, { performances: EnrichedPerformance[] }>;
+type EnrichedInvoice = Overwrite<
+	Invoice,
+	{ performances: EnrichedPerformance[]; totalAmount: number; totalVolumeCredits: number }
+>;
 
 export function statement(invoice: Invoice, plays: Plays) {
 	const statementData = {} as EnrichedInvoice;
 	statementData.customer = invoice.customer;
 	statementData.performances = invoice.performances.map(enrichPerformance);
+	statementData.totalAmount = totalAmount(statementData);
+	statementData.totalVolumeCredits = totalVolumeCredits(statementData);
 	return renderPlainText(statementData);
+
+	function totalAmount(data: EnrichedInvoice) {
+		let result = 0;
+		for (let perf of data.performances) {
+			result += perf.amount;
+		}
+		return result;
+	}
+
+	function totalVolumeCredits(data: EnrichedInvoice) {
+		let volumeCredits = 0;
+		for (let perf of data.performances) {
+			volumeCredits += perf.volumeCredits;
+		}
+		return volumeCredits;
+	}
 
 	function enrichPerformance(aPerformance: Performance) {
 		const result = { ...aPerformance } as EnrichedPerformance;
@@ -63,25 +84,9 @@ function renderPlainText(data: EnrichedInvoice) {
 		result += `${perf.play.name}: ${usd(perf.amount)} (${perf.audience}석)\n`;
 	}
 
-	result += `총액 ${usd(totalAmount())}\n`;
-	result += `적립 포인트: ${totalVolumeCredits()} 점\n`;
+	result += `총액 ${usd(data.totalAmount)}\n`;
+	result += `적립 포인트: ${data.totalVolumeCredits} 점\n`;
 	return result;
-
-	function totalAmount() {
-		let result = 0;
-		for (let perf of data.performances) {
-			result += perf.amount;
-		}
-		return result;
-	}
-
-	function totalVolumeCredits() {
-		let volumeCredits = 0;
-		for (let perf of data.performances) {
-			volumeCredits += perf.volumeCredits;
-		}
-		return volumeCredits;
-	}
 
 	function usd(aNumber: number) {
 		return new Intl.NumberFormat("en-US", {
