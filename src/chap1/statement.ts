@@ -1,5 +1,5 @@
 import type { Performance, Invoice } from "@/types/Invoice";
-import type { Plays } from "@/types/play";
+import type { Play, Plays } from "@/types/play";
 
 export function statement(invoice: Invoice, plays: Plays) {
 	const statementData = {} as Invoice;
@@ -8,7 +8,13 @@ export function statement(invoice: Invoice, plays: Plays) {
 	return renderPlainText(statementData, plays);
 
 	function enrichPerformance(aPerformance: Performance) {
-		return { ...aPerformance };
+		const result = { ...aPerformance } as Performance & { play: Play };
+		result.play = playFor(result);
+		return result;
+	}
+
+	function playFor(aPerformance: Performance) {
+		return plays[aPerformance.playID];
 	}
 }
 
@@ -77,9 +83,5 @@ function renderPlainText(data: Invoice, plays: Plays) {
 				throw new Error(`알 수 없는 장르: ${playFor(aPerformance).type}`);
 		}
 		return result;
-	}
-
-	function playFor(aPerformance: Performance) {
-		return plays[aPerformance.playID];
 	}
 }
