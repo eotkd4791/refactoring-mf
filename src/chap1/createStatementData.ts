@@ -10,13 +10,14 @@ export function createStatementData(invoice: Invoice, plays: Plays) {
   result.totalVolumeCredits = totalVolumeCredits(result);
   return result;
 
-  function enrichPerformance(aPerformance: Performance) {
+  function enrichPerformance(aPerformance: Performance): EnrichedPerformance {
     const calculator = createPerformanceCalculator(aPerformance, playFor(aPerformance));
-    const result = { ...aPerformance } as EnrichedPerformance;
-    result.play = calculator.play;
-    result.amount = calculator.amount;
-    result.volumeCredits = calculator.volumeCredits;
-    return result;
+    return {
+      ...aPerformance,
+      play: calculator.play,
+      amount: calculator.amount,
+      volumeCredits: calculator.volumeCredits,
+    };
   }
 
   function playFor(aPerformance: Performance) {
