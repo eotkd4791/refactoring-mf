@@ -2,7 +2,7 @@ import type { Performance, Invoice } from "@/types/Invoice";
 import { Overwrite } from "@/types/libs";
 import type { Play, Plays } from "@/types/play";
 
-type EnrichedPerformance = Overwrite<Performance, { play: Play; amount: number }>;
+type EnrichedPerformance = Overwrite<Performance, { play: Play; amount: number; volumeCredits: number }>;
 type EnrichedInvoice = Overwrite<Invoice, { performances: EnrichedPerformance[] }>;
 
 export function statement(invoice: Invoice, plays: Plays) {
@@ -15,6 +15,7 @@ export function statement(invoice: Invoice, plays: Plays) {
 		const result = { ...aPerformance } as EnrichedPerformance;
 		result.play = playFor(result);
 		result.amount = amountFor(result);
+		result.volumeCredits = volumeCreditsFor(result);
 		return result;
 	}
 
@@ -44,6 +45,15 @@ export function statement(invoice: Invoice, plays: Plays) {
 		}
 		return result;
 	}
+
+	function volumeCreditsFor(aPerformance: EnrichedPerformance) {
+		let result = 0;
+		result += Math.max(aPerformance.audience - 30, 0);
+		if ("comedy" === aPerformance.play.type) {
+			result += Math.floor(aPerformance.audience / 5);
+		}
+		return result;
+	}
 }
 
 function renderPlainText(data: EnrichedInvoice) {
@@ -68,18 +78,9 @@ function renderPlainText(data: EnrichedInvoice) {
 	function totalVolumeCredits() {
 		let volumeCredits = 0;
 		for (let perf of data.performances) {
-			volumeCredits += volumeCreditsFor(perf);
+			volumeCredits += perf.volumeCredits;
 		}
 		return volumeCredits;
-	}
-
-	function volumeCreditsFor(aPerformance: EnrichedPerformance) {
-		let result = 0;
-		result += Math.max(aPerformance.audience - 30, 0);
-		if ("comedy" === aPerformance.play.type) {
-			result += Math.floor(aPerformance.audience / 5);
-		}
-		return result;
 	}
 
 	function usd(aNumber: number) {
