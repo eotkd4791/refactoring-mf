@@ -1,6 +1,10 @@
 import { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/types/Invoice";
 import { Plays } from "@/types/play";
 
+class PerformanceCalculator {
+	constructor(private readonly performance: Performance) {}
+}
+
 export function createStatementData(invoice: Invoice, plays: Plays) {
 	const result = {} as EnrichedInvoice;
 	result.customer = invoice.customer;
