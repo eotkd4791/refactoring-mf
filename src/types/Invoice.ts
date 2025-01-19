@@ -1,5 +1,5 @@
 import type { Overwrite } from "@/types/libs";
-import { Play } from "@/types/play";
+import type { Play } from "@/types/play";
 
 export type Invoice = {
   customer: string;
