@@ -1,14 +1,18 @@
 import type { Performance, Invoice } from "@/types/Invoice";
+import { Overwrite } from "@/types/libs";
 import type { Play, Plays } from "@/types/play";
 
+type EnrichedPerformance = Overwrite<Performance, { play: Play }>;
+type EnrichedInvoice = Overwrite<Invoice, { performances: EnrichedPerformance[] }>;
+
 export function statement(invoice: Invoice, plays: Plays) {
-	const statementData = {} as Invoice;
+	const statementData = {} as EnrichedInvoice;
 	statementData.customer = invoice.customer;
 	statementData.performances = invoice.performances.map(enrichPerformance);
-	return renderPlainText(statementData, plays);
+	return renderPlainText(statementData);
 
 	function enrichPerformance(aPerformance: Performance) {
-		const result = { ...aPerformance } as Performance & { play: Play };
+		const result = { ...aPerformance } as EnrichedPerformance;
 		result.play = playFor(result);
 		return result;
 	}
@@ -18,11 +22,11 @@ export function statement(invoice: Invoice, plays: Plays) {
 	}
 }
 
-function renderPlainText(data: Invoice, plays: Plays) {
+function renderPlainText(data: EnrichedInvoice) {
 	let result = `청구 내역 (고객명: ${data.customer})\n`;
 
 	for (let perf of data.performances) {
-		result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
+		result += `${perf.play.name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
 	}
 
 	result += `총액 ${usd(totalAmount())}\n`;
@@ -45,10 +49,10 @@ function renderPlainText(data: Invoice, plays: Plays) {
 		return volumeCredits;
 	}
 
-	function volumeCreditsFor(aPerformance: Performance) {
+	function volumeCreditsFor(aPerformance: EnrichedPerformance) {
 		let result = 0;
 		result += Math.max(aPerformance.audience - 30, 0);
-		if ("comedy" === playFor(aPerformance).type) {
+		if ("comedy" === aPerformance.play.type) {
 			result += Math.floor(aPerformance.audience / 5);
 		}
 		return result;
@@ -62,10 +66,10 @@ function renderPlainText(data: Invoice, plays: Plays) {
 		}).format(aNumber / 100);
 	}
 
-	function amountFor(aPerformance: Performance) {
+	function amountFor(aPerformance: EnrichedPerformance) {
 		let result = 0;
 
-		switch (playFor(aPerformance).type) {
+		switch (aPerformance.play.type) {
 			case "tragedy":
 				result = 40000;
 				if (aPerformance.audience > 30) {
@@ -80,7 +84,7 @@ function renderPlainText(data: Invoice, plays: Plays) {
 				result += 300 * aPerformance.audience;
 				break;
 			default:
-				throw new Error(`알 수 없는 장르: ${playFor(aPerformance).type}`);
+				throw new Error(`알 수 없는 장르: ${aPerformance.play.type}`);
 		}
 		return result;
 	}
