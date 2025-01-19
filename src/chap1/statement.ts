@@ -2,12 +2,16 @@ import type { Performance, Invoice } from "@/types/Invoice";
 import type { Plays } from "@/types/play";
 
 export function statement(invoice: Invoice, plays: Plays) {
-	return renderPlainText(invoice, plays);
+	const statementData = {} as Invoice;
+	statementData.customer = invoice.customer;
+	statementData.performances = invoice.performances;
+	return renderPlainText(statementData, invoice, plays);
 }
-function renderPlainText(invoice: Invoice, plays: Plays) {
-	let result = `청구 내역 (고객명: ${invoice.customer})\n`;
 
-	for (let perf of invoice.performances) {
+function renderPlainText(data: Invoice, invoice: Invoice, plays: Plays) {
+	let result = `청구 내역 (고객명: ${data.customer})\n`;
+
+	for (let perf of data.performances) {
 		result += `${playFor(perf).name}: ${usd(amountFor(perf))} (${perf.audience}석)\n`;
 	}
 
@@ -17,7 +21,7 @@ function renderPlainText(invoice: Invoice, plays: Plays) {
 
 	function totalAmount() {
 		let result = 0;
-		for (let perf of invoice.performances) {
+		for (let perf of data.performances) {
 			result += amountFor(perf);
 		}
 		return result;
@@ -25,7 +29,7 @@ function renderPlainText(invoice: Invoice, plays: Plays) {
 
 	function totalVolumeCredits() {
 		let volumeCredits = 0;
-		for (let perf of invoice.performances) {
+		for (let perf of data.performances) {
 			volumeCredits += volumeCreditsFor(perf);
 		}
 		return volumeCredits;
