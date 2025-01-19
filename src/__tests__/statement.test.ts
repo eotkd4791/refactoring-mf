@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { statement } from "@/statement";
+import { statement } from "@/chap1/statement";
 import { invoices } from "@/data/invoices.ts";
 import { plays } from "@/data/plays.ts";
 
