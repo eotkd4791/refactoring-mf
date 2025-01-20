@@ -18,7 +18,7 @@ function renderPlainText(data: EnrichedInvoice) {
   return result;
 }
 
-function htmlStatement(invoice: Invoice, plays: Plays) {
+export function htmlStatement(invoice: Invoice, plays: Plays) {
   return renderHtml(createStatementData(invoice, plays));
 }
 
