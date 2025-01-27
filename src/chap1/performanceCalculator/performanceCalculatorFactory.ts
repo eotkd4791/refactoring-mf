@@ -3,11 +3,13 @@ import type { Performance } from "@/types/Invoice";
 import { TragedyCalculator } from "@/chap1/performanceCalculator/TragedyCalculator";
 import { ComedyCalculator } from "@/chap1/performanceCalculator/ComedyCalculator";
 
-export function createPerformanceCalculator(aPerformance: Performance, aPlay: Play) {
-  switch (aPlay.type) {
-    case "tragedy":
-      return new TragedyCalculator(aPerformance, aPlay);
-    case "comedy":
-      return new ComedyCalculator(aPerformance, aPlay);
+export class PerformanceCalculatorFactory {
+  static create(aPerformance: Performance, aPlay: Play) {
+    switch (aPlay.type) {
+      case "tragedy":
+        return new TragedyCalculator(aPerformance, aPlay);
+      case "comedy":
+        return new ComedyCalculator(aPerformance, aPlay);
+    }
   }
 }

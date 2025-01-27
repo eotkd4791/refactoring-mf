@@ -1,6 +1,6 @@
 import type { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/types/Invoice";
 import type { Plays } from "@/types/play";
-import { createPerformanceCalculator } from "@/chap1/performanceCalculator/performanceCalculatorFactory";
+import { PerformanceCalculatorFactory } from "@/chap1/performanceCalculator/PerformanceCalculatorFactory";
 
 export function createStatementData(invoice: Invoice, plays: Plays) {
   const result = {} as EnrichedInvoice;
@@ -11,7 +11,7 @@ export function createStatementData(invoice: Invoice, plays: Plays) {
   return result;
 
   function enrichPerformance(aPerformance: Performance): EnrichedPerformance {
-    const calculator = createPerformanceCalculator(aPerformance, playFor(aPerformance));
+    const calculator = PerformanceCalculatorFactory.create(aPerformance, playFor(aPerformance));
     return {
       ...aPerformance,
       play: calculator.play,
