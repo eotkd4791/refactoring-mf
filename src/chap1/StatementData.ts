@@ -1,5 +1,5 @@
-import type { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/types/Invoice";
-import type { Plays } from "@/types/play";
+import type { EnrichedInvoice, EnrichedPerformance, Invoice, Performance } from "@/chap1/types/Invoice";
+import type { Plays } from "@/chap1/types/play";
 import { PerformanceCalculatorFactory } from "@/chap1/performanceCalculator/PerformanceCalculatorFactory";
 
 export class StatementData {

@@ -1,5 +1,5 @@
-import type { Play } from "@/types/play";
-import type { Performance } from "@/types/Invoice";
+import type { Play } from "@/chap1/types/play";
+import type { Performance } from "@/chap1/types/Invoice";
 import { TragedyCalculator } from "@/chap1/performanceCalculator/TragedyCalculator";
 import { ComedyCalculator } from "@/chap1/performanceCalculator/ComedyCalculator";
 

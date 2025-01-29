@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { invoices } from "@/data/invoices.ts";
-import { plays } from "@/data/plays.ts";
+import { invoices } from "@/chap1/data/invoices";
+import { plays } from "@/chap1/data/plays";
 import { TextRenderer } from "@/chap1/renderer/TextRenderer";
 import { StatementData } from "@/chap1/StatementData";
-import { HTMLRenderer } from "@/chap1/renderer/HtmlRenderer";
+import { HTMLRenderer } from "@/chap1/renderer/HTMLRenderer";
 import { Renderer } from "@/chap1/renderer/Renderer";
 
 describe("statement 함수", () => {

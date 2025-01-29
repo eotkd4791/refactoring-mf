@@ -1,5 +1,5 @@
 import { Renderer } from "@/chap1/renderer/Renderer";
-import { EnrichedInvoice } from "@/types/Invoice";
+import { EnrichedInvoice } from "@/chap1/types/Invoice";
 
 export class HTMLRenderer extends Renderer {
   render(data: EnrichedInvoice) {

@@ -1,4 +1,4 @@
-import type { Plays } from "@/types/play";
+import type { Plays } from "@/chap1/types/play";
 
 export const plays: Plays = {
   hamlet: {
