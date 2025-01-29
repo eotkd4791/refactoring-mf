@@ -1,12 +1,13 @@
 import { invoices } from "@/data/invoices";
 import { plays } from "@/data/plays";
-import { statement, htmlStatement } from "@/chap1/statement";
+import { StatementRenderer } from "@/chap1/StatementRenderer";
 import { render } from "@/utils/render";
 
 function main() {
   const invoice = invoices[0];
-  const result1 = statement(invoice, plays);
-  const result2 = htmlStatement(invoice, plays);
+  const statementRenderer = new StatementRenderer();
+  const result1 = statementRenderer.renderStatement(invoice, plays);
+  const result2 = statementRenderer.renderHtmlStatement(invoice, plays);
   render(result1 + "<br />".repeat(2) + "<hr />".repeat(2) + result2);
 }
 

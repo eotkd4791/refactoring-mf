@@ -1,12 +1,13 @@
 import { describe, expect, test } from "vitest";
-import { statement, htmlStatement } from "@/chap1/statement";
+import { StatementRenderer } from "@/chap1/StatementRenderer";
 import { invoices } from "@/data/invoices.ts";
 import { plays } from "@/data/plays.ts";
 
 describe("statement 함수", () => {
   test("statement 초기 상태", () => {
     const invoice = invoices[0];
-    const result = statement(invoice, plays);
+    const statementRenderer = new StatementRenderer();
+    const result = statementRenderer.renderStatement(invoice, plays);
 
     const expectedResult = [
       "청구 내역 (고객명: BigCo)",
@@ -23,7 +24,8 @@ describe("statement 함수", () => {
 
   test("htmlStatement 반환값", () => {
     const invoice = invoices[0];
-    const result = htmlStatement(invoice, plays);
+    const statementRenderer = new StatementRenderer();
+    const result = statementRenderer.renderHtmlStatement(invoice, plays);
 
     expect(result).toMatchInlineSnapshot(
       `
