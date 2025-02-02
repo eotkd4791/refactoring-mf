@@ -1,6 +1,6 @@
 import type { EnrichedInvoice } from "@/chap1/types/Invoice";
 
-export abstract class Renderer {
+export abstract class StatementGenerator {
   protected usd(aNumber: number) {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -9,5 +9,5 @@ export abstract class Renderer {
     }).format(aNumber / 100);
   }
 
-  abstract render(invoice: EnrichedInvoice): string;
+  abstract generate(invoice: EnrichedInvoice): string;
 }

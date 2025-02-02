@@ -1,8 +1,8 @@
-import { Renderer } from "@/chap1/renderer/Renderer";
+import { StatementGenerator } from "@/chap1/statementGenerator/StatementGenerator";
 import { EnrichedInvoice } from "@/chap1/types/Invoice";
 
-export class HTMLRenderer extends Renderer {
-  render(data: EnrichedInvoice) {
+export class HTMLGenerator extends StatementGenerator {
+  generate(data: EnrichedInvoice) {
     let result = `<h1>청구 내역 (고객명: ${data.customer})</h1>\n`;
     result += "<table>\n";
     result += "<tr><th>연극</th><th>좌석수</th><th>금액</th></tr>";

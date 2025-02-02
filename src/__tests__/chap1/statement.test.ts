@@ -1,17 +1,17 @@
 import { describe, expect, test } from "vitest";
 import { invoices } from "@/chap1/data/invoices";
 import { plays } from "@/chap1/data/plays";
-import { TextRenderer } from "@/chap1/renderer/TextRenderer";
 import { StatementData } from "@/chap1/StatementData";
-import { HTMLRenderer } from "@/chap1/renderer/HTMLRenderer";
-import { Renderer } from "@/chap1/renderer/Renderer";
+import { StatementGenerator } from "@/chap1/statementGenerator/StatementGenerator";
+import { HTMLGenerator } from "@/chap1/statementGenerator/HTMLGenerator";
+import { TextGenerator } from "@/chap1/statementGenerator/TextGenerator";
 
 describe("statement 함수", () => {
   test("statement 초기 상태", () => {
     const invoice = invoices[0];
     const statementData = new StatementData(invoice, plays).create();
-    const renderer: Renderer = new TextRenderer();
-    const statement = renderer.render(statementData);
+    const statementGenerator: StatementGenerator = new TextGenerator();
+    const statement = statementGenerator.generate(statementData);
 
     const expectedResult = [
       "청구 내역 (고객명: BigCo)",
@@ -29,8 +29,8 @@ describe("statement 함수", () => {
   test("htmlStatement 반환값", () => {
     const invoice = invoices[0];
     const statementData = new StatementData(invoice, plays).create();
-    const renderer: Renderer = new HTMLRenderer();
-    const statement = renderer.render(statementData);
+    const statementGenerator: StatementGenerator = new HTMLGenerator();
+    const statement = statementGenerator.generate(statementData);
 
     expect(statement).toMatchInlineSnapshot(
       `

@@ -1,8 +1,8 @@
-import { Renderer } from "@/chap1/renderer/Renderer";
+import { StatementGenerator } from "@/chap1/statementGenerator/StatementGenerator";
 import { EnrichedInvoice } from "@/chap1/types/Invoice";
 
-export class TextRenderer extends Renderer {
-  render(data: EnrichedInvoice) {
+export class TextGenerator extends StatementGenerator {
+  generate(data: EnrichedInvoice) {
     let result = `청구 내역 (고객명: ${data.customer})\n`;
 
     for (const perf of data.performances) {

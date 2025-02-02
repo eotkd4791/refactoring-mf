@@ -1,16 +1,16 @@
 import { invoices } from "@/chap1/data/invoices";
 import { plays } from "@/chap1/data/plays";
-import { render } from "@/chap1/utils/render";
-import { HTMLRenderer } from "@/chap1/renderer/HTMLRenderer";
 import { StatementData } from "@/chap1/StatementData";
-import { Renderer } from "@/chap1/renderer/Renderer";
-// import { TextRenderer } from "@/chap1/renderer/TextRenderer";
+import { render } from "@/chap1/utils/render";
+import { StatementGenerator } from "@/chap1/statementGenerator/StatementGenerator";
+import { HTMLGenerator } from "@/chap1/statementGenerator/HTMLGenerator";
+// import { TextGenerator } from "@/chap1/generator/TextGenerator";
 
 function main() {
   const invoice = invoices[0];
   const statementData = new StatementData(invoice, plays).create();
-  const renderer: Renderer = new HTMLRenderer();
-  const statement = renderer.render(statementData);
+  const statementGenerator: StatementGenerator = new HTMLGenerator();
+  const statement = statementGenerator.generate(statementData);
   render(statement);
 }
 
